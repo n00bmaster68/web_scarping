@@ -8,6 +8,8 @@ import pandas
 import time
 import sys
 
+#bước 1: tìm div (hoặc tag khác) chứa tất cả comments
+#bước 2: từ div (hoặc tag khác) ở bước 1, tìm ra từng comment, điểm và tên người dùng tuỳ trường hợp
 
 def get_source_by_requests(url):
     page = requests.get(url)
@@ -15,7 +17,7 @@ def get_source_by_requests(url):
 
 
 def create_chrome_driver():
-    driver_chrome = webdriver.Chrome("chromedriver.exe")
+    driver_chrome = webdriver.Chrome("chromedriver.exe") #đưa đường dẫn tới file chromedriver.exe vào
     return driver_chrome
 
 def get_number_of_pages (string):
@@ -39,6 +41,7 @@ def get_comments_from_page(driver, product_id):
     print('\n')
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
+    #do web này không thể tìm trang tiếp theo nên phải tìm số lượng trang trước
     numpage = soup.find_all('div', {'class':'lemon--div__373c0__1mboc border-color--default__373c0__3-ifU text-align--center__373c0__2n2yQ'})
     #print(numpage[0].span.text)
     numpage = str(numpage[0].span.text)
@@ -49,7 +52,9 @@ def get_comments_from_page(driver, product_id):
     # get the comments area
     for num in range(numpage):
         num_of_reviews = 0
-        index = num*20
+        index = num*20 #mỗi page sẽ có 20 reviews và link theo đổi theo quy luật là 0, 20, 40, 60,...
+        #https://www.yelp.com/biz/shin-toe-bul-yi-san-francisco?osq=Restaurants?osq=Restaurants%3Fstart%3D120&start=540
+        #https://www.yelp.com/biz/shin-toe-bul-yi-san-francisco?osq=Restaurants?osq=Restaurants%3Fstart%3D120&start=560
         #print(num)
         #print(f'index: {index}')
         print(f'Page {num}')
@@ -63,7 +68,7 @@ def get_comments_from_page(driver, product_id):
             print('something went wrong, cannot find review_part')
             return found_comments, found_scores, found_customer_name
     
-    # get all comments in review_part
+        # get all comments in review_part
         comment_parts = comment_areas[0].findChildren('li', {'class': 'lemon--li__373c0__1r9wz margin-b3__373c0__q1DuY padding-b3__373c0__342DA border--bottom__373c0__3qNtD border-color--default__373c0__3-ifU'})
         
         if len(comment_parts) is None:
@@ -95,7 +100,7 @@ def get_comments_from_page(driver, product_id):
 
         print('---------------------')
         
-        time.sleep(0.4)
+        time.sleep(0.4) # delay chương trình 0.6s để tránh bị chặn
     return found_comments, found_scores, found_customer_name 
     
 
