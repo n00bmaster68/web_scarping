@@ -87,5 +87,5 @@ for product in products:
             id = []
             star = []
             comment = []
-
+            
 print('Collect {} comments'.format(count))
