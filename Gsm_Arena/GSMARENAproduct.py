@@ -5,10 +5,9 @@ import re
 
 
 # Open Chrome and paste url to load web page
-# Speed: slow
 # Compatibility: good, working as normal user
 def get_html_source_by_selenium(url):
-    driver_chrome = webdriver.Chrome("D:\\flask\\data\\chromedriver.exe")
+    driver_chrome = webdriver.Chrome("chromedriver.exe")
     driver_chrome.get(url)
     return driver_chrome.page_source
 
@@ -21,7 +20,7 @@ product_url ='https://www.gsmarena.com/{}'
 max_result = 1000000
 filename = ".\\data\\product2.csv"
 
-# do trang này nó phân chia sản phẩm dựa theo brand, nên phải lấy link dẫn tới từng thương hiệu rồi sau đó mới cào được 
+# do trang này nó phân chia sản phẩm dựa theo brand, nên phải lấy link dẫn tới từng thương hiệu rồi sau đó mới cào lấy sản phẩm từ brand đó được, dòng 24 -> 33 để làm việc đó 
 page = get_html_source_by_selenium(brand_url)
 soup = BeautifulSoup(page, 'html.parser')
 brand_area = soup.find_all('div', {'class': 'st-text'}) 
