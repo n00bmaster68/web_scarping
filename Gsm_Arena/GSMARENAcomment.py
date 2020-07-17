@@ -7,7 +7,8 @@ from selenium.webdriver.chrome.options import Options
 import pandas
 import time
 import sys
-
+""" trên gsm arena trong phần comment nó bao gồm cả câu hỏi và nó không cần thiết cho việc lấy ý kiến nên có 1 đoạn code để lọc ra phần đó 
+"""
 # This method creates an http connection to url directly without opening browser
 # Speed: fast
 # Compatibility: sometime this method is blocked by http server
@@ -47,7 +48,7 @@ def get_comments_from_page(driver, url):
     # get all comments in review_part
     comment_parts = comment_areas[0].findChildren('div', {'class': 'user-thread'})
     real_comment_parts = []
-    #dòng 51 đến dòng 55 kiểm tra xem comment part là comment hay chỉ là câu hỏi, nếu là comment thì mới lấy
+    #dòng 52 đến dòng 56 kiểm tra xem comment part là comment hay chỉ là câu hỏi, nếu là comment thì mới lấy
     for comment_part in comment_parts:
         if comment_part.findChildren('span', {'class':'uinreply-msg uinreply-msg-single'}) or comment_part.findChildren('span', {'class':'uinreply-msg'}):
             pass
@@ -68,7 +69,6 @@ def get_comments_from_page(driver, url):
         # find the next page url
         button_area = soup.find_all('div', {'class': 'sub-footer no-margin-bottom'})
         if button_area != []:
-            
             #next_buttons = button_area[0].find_all('div', {'class': 'nav-pages'})
             next_buttons = button_area[0].find_all('a', {'title': 'Next page'})
             #print(next_buttons)
@@ -90,7 +90,6 @@ def get_comments_from_page(driver, url):
 
 def get_product_comments(driver, product_id):
     all_comments = []
-    #all_scores = []
     page_no = 1
     url = 'https://www.gsmarena.com/{}'.format(product_id)
 
