@@ -83,6 +83,7 @@ def get_comments_from_page(driver, product_id):
                 found_customer_name.append(customer_name[0].span.a.text)
             else:
                 print("This review doesn't have customer name")
+                found_customer_name.append('no name')
 
                 
             # get score
