@@ -72,8 +72,5 @@ if __name__ == "__main__":
             break
 
         time.sleep(0.6)
-
-        #find next page
         
-
     print('Finished product list')
